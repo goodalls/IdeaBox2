@@ -13,6 +13,7 @@ function saveButtonEnabled() {
 }
 
 function addIdea() {
+  event.preventDefault();
   var id = $.now();
   var ideaToStore = $(`<article id='${id}' class="idea-card">
         <h2>${ideaName.value}</h2>
@@ -22,7 +23,20 @@ function addIdea() {
         <button id="${id}" class="down-vote-button"></button>
         <h3>quality: swill</h3>
       </article>`).appendTo('.idea-section');
+
+  inputReset();
+  console.log(ideaToStore);
   var stringifiedIdea = JSON.stringify(ideaToStore);
   localStorage.setItem('idea', stringifiedIdea);
-  console.log('it gets here');
+
+  var retrievedIdea = localStorage.getItem('idea');
+  var parsedIdea = JSON.parse(retrievedIdea);
+  return parsedIdea;
+}
+
+function inputReset() {
+  $(ideaName).val('');
+  $(ideaDetails).val('');
+  $(ideaName).focus();
+  saveButton.disabled = true;
 }
