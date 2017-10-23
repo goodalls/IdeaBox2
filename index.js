@@ -20,9 +20,44 @@ function addIdea() {
         <p class="idea-body">${ideaDetails.value}</p>
         <button id="${id}" class="up-vote-button"></button>
         <button id="${id}" class="down-vote-button"></button>
-        <h3>quality: swill</h3>
+        <h3 class="quality">quality: swill</h3>
       </article>`).appendTo('.idea-section');
   var stringifiedIdea = JSON.stringify(ideaToStore);
   localStorage.setItem('idea', stringifiedIdea);
   console.log('it gets here');
 }
+
+$('.idea-section').on('click', function (e) {
+  if ($(e.target).hasClass('up-vote-button')) {
+    console.log('qualityUp clicked')
+  } else if ($(e.target).hasClass('down-vote-button')) {
+    console.log('quality Down Clicked')
+  } else if ($(e.target).hasClass('delete-idea-button')) {
+    console.log('delete-idea-button Clicked')
+    $(e.target).parent().fadeOut(1000, function (){
+    $(e.target).parent().remove();
+  });
+  }
+});
+
+// function cardHandler (e){
+//   var elParent = $(e.target).parent();
+//   if($(e.target).hasClass('delete-button')){
+//     $(e.target).parent().fadeOut(2000, function (){
+//       $(e.target).parent().remove();
+//     });
+//     setTimeout( function (){
+//       totalCard();
+//       totalCardRead();
+//       totalCardUnread();
+//     },2010)
+//   } else if ($(e.target).hasClass('read-button')){
+//     if (elParent.hasClass('read')) {
+//       elParent.removeClass('read');
+//     } else {
+//       elParent.addClass('read');
+//     }
+//     totalCardRead();
+//     totalCardUnread();
+//   }
+// }
