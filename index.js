@@ -1,37 +1,55 @@
-var ideaName = document.querySelector('#title-input');
-var ideaDetails = document.querySelector('#body-input');
-var saveButton = document.querySelector('#save-button');
+var ideaName = $('#title-input');
+var ideaDetails = $('#body-input');
+var saveButton = $('#save-button');
+var quality = [];
 
-ideaName.addEventListener('keyup', saveButtonEnabled);
-ideaDetails.addEventListener('keyup', saveButtonEnabled);
-saveButton.addEventListener('click', addIdea);
+ideaName.on('keyup', saveButtonEnabled);
+ideaDetails.on('keyup', saveButtonEnabled);
+saveButton.on('click', addIdea);
 
 function saveButtonEnabled() {
   if (saveButton.disabled = true) {
-  saveButton.removeAttribute('disabled', false);
+  saveButton.removeAttr('disabled', false);
   }
+}
+
+function IdeaObject(title, body, quality, id) {
+  this.title = title;
+  this.body = body;
+  this.quality = quality;
+  this.id;
 }
 
 function addIdea() {
   event.preventDefault();
   var id = $.now();
-  var ideaToStore = $(`<article id='${id}' class="idea-card">
-        <h2>${ideaName.value}</h2>
-        <button id="${id}" class="delete-idea-button"></button>
-        <p class="idea-body">${ideaDetails.value}</p>
-        <button id="${id}" class="up-vote-button"></button>
-        <button id="${id}" class="down-vote-button"></button>
+  var cardObject = $(`<article id='${id}' class="idea-card">
+        <h2>${ideaName.val()}</h2>
+        <button class="delete-idea-button"></button>
+        <p class="idea-body">${ideaDetails.val()}</p>
+        <button class="up-vote-button"></button>
+        <button class="down-vote-button"></button>
         <h3 class="quality">quality: swill</h3>
-      </article>`).appendTo('.idea-section');
+      </article>`);
 
+  cardObject.appendTo('.idea-section');
+
+  console.log(ideaName.val());
+
+  var idea = new IdeaObject(ideaName.val(), ideaDetails.val(), quality, id)
+  // ideaObject(ideaName.value, ideaDetails.value, , id);
+  // var storedIdeas = new Object(ideaName.value, ideaDetails.value, id);
+  // console.log('stuff');
+  var stringifiedIdea = JSON.stringify(idea);
+  localStorage.setItem(id, stringifiedIdea);
+
+  // var retrievedIdea = localStorage.getItem('idea');
+  // var parsedIdea = JSON.parse(retrievedIdea);
   inputReset();
-  console.log(ideaToStore);
-  var stringifiedIdea = JSON.stringify(ideaToStore);
-  localStorage.setItem('idea', stringifiedIdea);
+}
 
-  var retrievedIdea = localStorage.getItem('idea');
-  var parsedIdea = JSON.parse(retrievedIdea);
-  return parsedIdea;
+function createIdeaCard (){
+
 }
 
 function inputReset() {
@@ -53,25 +71,3 @@ $('.idea-section').on('click', function (e) {
   });
   }
 });
-
-// function cardHandler (e){
-//   var elParent = $(e.target).parent();
-//   if($(e.target).hasClass('delete-button')){
-//     $(e.target).parent().fadeOut(2000, function (){
-//       $(e.target).parent().remove();
-//     });
-//     setTimeout( function (){
-//       totalCard();
-//       totalCardRead();
-//       totalCardUnread();
-//     },2010)
-//   } else if ($(e.target).hasClass('read-button')){
-//     if (elParent.hasClass('read')) {
-//       elParent.removeClass('read');
-//     } else {
-//       elParent.addClass('read');
-//     }
-//     totalCardRead();
-//     totalCardUnread();
-//   }
-// }
