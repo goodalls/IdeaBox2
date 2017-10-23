@@ -76,9 +76,19 @@ input::placeholder {
 }
 
 .delete-idea-button {
-  padding: 2% 0% 7% 34%;
-  position: absolute
+  /*position: absolute;
+  right: 0px;
+  top: 0px;*/
   text-align: left;
+  height: 80px;
+  width: 80px;
+  background-image: url("images/delete.svg");
+  background-repeat: no-repeat;
+}
+
+.delete-idea-button:hover {
+  background-image: url("images/delete-hover.svg");
+
 }
 
 .idea-card p {
@@ -88,7 +98,27 @@ input::placeholder {
 }
 
 .up-vote-button {
+  height: 80px;
+  width: 80px;
+  background-image: url("images/upvote.svg");
   padding: 0% 3% 0% 0%;
+  background-repeat: no-repeat;
+}
+
+.up-vote-button:hover {
+  background-image: url("images/upvote-hover.svg");
+}
+
+.down-vote-button {
+  height: 80px;
+  width: 80px;
+  background-image: url("images/downvote.svg");
+  padding: 0% 3% 0% 0%;
+  background-repeat: no-repeat;
+}
+
+.down-vote-button:hover {
+  background-image: url("images/downvote-hover.svg");
 }
 
 .idea-card h3{
@@ -98,3 +128,10 @@ input::placeholder {
   position: absolute;
   text-align: center;
 }
+
+/*Desktop Version*/
+@media only screen and (min-width: 768px) {
+
+
+
+}/*Desktop Version*/
