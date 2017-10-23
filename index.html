@@ -4,13 +4,35 @@
     <title>Idea Box</title>
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
   </head>
   <body>
-
-
-
-
-
+    <header>
+      <h1 class="header-1">idea</h1>   
+      <h1 class="header-2">box</h1>
+    </header>
+    <form>
+      <label for="title-input"></label>
+      <input type="text" id="title-input" name="title-input" required="true" placeholder="Title">
+      <label for="body-input"></label>
+      <input type="text" id="body-input" name="body-input" required="true" placeholder="Body">
+      <label for="save-button"></label>
+      <input type="button" value="save" id="save-button" disabled="true">
+    </form>
+    <section>
+      <label for="search-input"></label>
+      <input type="text" id="search-input" name="search-input" required="true" placeholder="Search">
+      <section class="idea-section"></section>
+      <!-- <article class="idea-card">
+        <h2>Example Idea</h2>
+        <button class="delete-idea-button"><img src="images/delete.svg" alt="delete button" height='80'></button>
+        <p class="idea-body">Example body</p>
+        <button class="up-vote-button"><img src="images/upvote.svg" alt="up vote button" height='80'></button>
+        <button class="down-vote-button"><img src="images/downvote.svg" alt="down vote button" height="80"></button>
+        <h3>quality: swill</h3>
+      </article> -->
+    </section>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="./jQuery/jquery-3.2.1.min.js"><\/script>')</script>
     <script src="./index.js"></script>
