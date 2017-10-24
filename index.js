@@ -1,7 +1,7 @@
 var ideaName = $('#title-input');
 var ideaDetails = $('#body-input');
 var saveButton = $('#save-button');
-var quality = ['Swill', 'Plausible', 'Genius'];
+var quality = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
 counter = 0
 
 window.onload = loadStoredIdeas(localStorage.getItem('id'));
@@ -30,7 +30,7 @@ function createCardObjects(title, body, quality, id) {
         <p class="idea-body">${body}</p>
         <button class="up-vote-button"></button>
         <button class="down-vote-button"></button>
-        <h3 class="quality">quality: ${quality}</h3>
+        <h3 class="quality">Quality: Swill</h3>
       </article>`);
   cardObject.appendTo('.idea-section');
 }
@@ -38,7 +38,7 @@ function createCardObjects(title, body, quality, id) {
 function newIdea(title, body, quality, id) {
   event.preventDefault();
   var id = $.now();
-  var newIdea = new IdeaObject(ideaName.val(), ideaDetails.val(), quality[0], id);
+  var newIdea = new IdeaObject(ideaName.val(), ideaDetails.val(), quality, id);
   storeIdea(ideaName.val(), ideaDetails.val(), quality, id);
   inputReset();
 }
@@ -95,10 +95,13 @@ function qualityModifier() {
   console.log('QualityModifier reached')
   if (counter === 0) {
     console.log(quality[0]);
+    $('.quality').text(quality[0])
   } else if (counter === 1) {
     console.log(quality[1]);
+    $('.quality').text(quality[1])
   } else if (counter === 2) {
     console.log(quality[2]);
+    $('.quality').text(quality[2])
   } else {
     if (counter > 2) {
       counter--
