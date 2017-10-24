@@ -3,7 +3,7 @@ var ideaDetails = $('#body-input');
 var saveButton = $('#save-button');
 var quality = 0;
 
-window.onload = loadStoredIdeas(localStorage.getItem([id]));
+window.onload = loadStoredIdeas();
 
 ideaName.on('keyup', saveButtonEnabled);
 ideaDetails.on('keyup', saveButtonEnabled);
@@ -53,14 +53,15 @@ function ideaArchive(id) {
   var retrievedIdea = localStorage.getItem(id);
   var parsedIdea = JSON.parse(retrievedIdea);
   createCardObjects(parsedIdea.title, parsedIdea.body, parsedIdea.quality, id);
+
 }
 
-function loadStoredIdeas(id) {
-  for (var i = 0; i < localStorage.length; i++) {
-    
-    localStorage.getItem(id);
-
-    console.log(localStorage.getItem(id));
+function loadStoredIdeas() {
+  var ideaArray = Object.keys(localStorage)
+  for (var i = 0; i < ideaArray.length; i++) {
+    var storedIdea = localStorage.getItem(ideaArray[i]);
+    var reParseIdea = JSON.parse(storedIdea);
+    createCardObjects(reParseIdea['title'], reParseIdea['body'], reParseIdea['quality'], reParseIdea['id']);
   }
 }
 
