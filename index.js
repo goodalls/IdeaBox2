@@ -4,7 +4,7 @@ var saveButton = $('#save-button');
 var quality = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
 counter = 0
 
-window.onload = loadStoredIdeas(localStorage.getItem('id'));
+window.onload = loadStoredIdeas();
 
 ideaName.on('keyup', saveButtonEnabled);
 ideaDetails.on('keyup', saveButtonEnabled);
@@ -54,14 +54,15 @@ function ideaArchive(id) {
   var retrievedIdea = localStorage.getItem(id);
   var parsedIdea = JSON.parse(retrievedIdea);
   createCardObjects(parsedIdea.title, parsedIdea.body, parsedIdea.quality, id);
+
 }
 
-function loadStoredIdeas(id) {
-  for (var i = 0; i < localStorage.length; i++) {
-    
-    localStorage.getItem(id);
-
-    console.log(localStorage.getItem(id));
+function loadStoredIdeas() {
+  var ideaArray = Object.keys(localStorage)
+  for (var i = 0; i < ideaArray.length; i++) {
+    var storedIdea = localStorage.getItem(ideaArray[i]);
+    var reParseIdea = JSON.parse(storedIdea);
+    createCardObjects(reParseIdea['title'], reParseIdea['body'], reParseIdea['quality'], reParseIdea['id']);
   }
 }
 
@@ -94,13 +95,10 @@ $('.idea-section').on('click', function (e) {
 function qualityModifier() {
   console.log('QualityModifier reached')
   if (counter === 0) {
-    console.log(quality[0]);
     $('.quality').text(quality[0])
   } else if (counter === 1) {
-    console.log(quality[1]);
     $('.quality').text(quality[1])
   } else if (counter === 2) {
-    console.log(quality[2]);
     $('.quality').text(quality[2])
   } else {
     if (counter > 2) {
