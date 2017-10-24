@@ -1,7 +1,8 @@
 var ideaName = $('#title-input');
 var ideaDetails = $('#body-input');
 var saveButton = $('#save-button');
-var quality = 0;
+var quality = ['Swill', 'Plausible', 'Genius'];
+counter = 0
 
 window.onload = loadStoredIdeas();
 
@@ -29,7 +30,7 @@ function createCardObjects(title, body, quality, id) {
         <p class="idea-body">${body}</p>
         <button class="up-vote-button"></button>
         <button class="down-vote-button"></button>
-        <h3 class="quality">quality: swill</h3>
+        <h3 class="quality">quality: ${quality}</h3>
       </article>`);
   cardObject.appendTo('.idea-section');
 }
@@ -37,7 +38,7 @@ function createCardObjects(title, body, quality, id) {
 function newIdea(title, body, quality, id) {
   event.preventDefault();
   var id = $.now();
-  var newIdea = new IdeaObject(ideaName.val(), ideaDetails.val(), quality, id);
+  var newIdea = new IdeaObject(ideaName.val(), ideaDetails.val(), quality[0], id);
   storeIdea(ideaName.val(), ideaDetails.val(), quality, id);
   inputReset();
 }
@@ -75,8 +76,14 @@ function inputReset() {
 $('.idea-section').on('click', function (e) {
   if ($(e.target).hasClass('up-vote-button')) {
     console.log('qualityUp clicked')
+    console.log(counter)
+    counter++
+    qualityModifier()
   } else if ($(e.target).hasClass('down-vote-button')) {
     console.log('quality Down Clicked')
+    console.log(counter)
+    counter--
+    qualityModifier()
   } else if ($(e.target).hasClass('delete-idea-button')) {
     console.log('delete-idea-button Clicked')
     $(e.target).parent().fadeOut(1000, function (){
@@ -84,3 +91,22 @@ $('.idea-section').on('click', function (e) {
   });
   }
 });
+
+function qualityModifier() {
+  console.log('QualityModifier reached')
+  if (counter === 0) {
+    console.log(quality[0]);
+  } else if (counter === 1) {
+    console.log(quality[1]);
+  } else if (counter === 2) {
+    console.log(quality[2]);
+  } else {
+    if (counter > 2) {
+      counter--
+      qualityModifier ()
+    } else if (counter < 0) {
+      counter++
+      qualityModifier ()
+    };
+  };
+};
