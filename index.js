@@ -1,8 +1,9 @@
 var ideaName = $('#title-input');
 var ideaDetails = $('#body-input');
 var saveButton = $('#save-button');
-var quality = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+var quality = ['Swill', 'Plausible', 'Genius'];
 counter = 0
+
 
 window.onload = loadStoredIdeas();
 
@@ -20,7 +21,7 @@ function IdeaObject(title, body, quality, id) {
   this.title = title;
   this.body = body;
   this.quality = quality;
-  this.id;
+  this.id = id;
 }
 
 function createCardObjects(title, body, quality, id) {
@@ -30,7 +31,7 @@ function createCardObjects(title, body, quality, id) {
         <p class="idea-body">${body}</p>
         <button class="up-vote-button"></button>
         <button class="down-vote-button"></button>
-        <h3 class="quality">Quality: Swill</h3>
+        <h3>Quality: <span class="quality">Swill</span></h3>
       </article>`);
   cardObject.prependTo('.idea-section');
 }
@@ -73,6 +74,10 @@ function inputReset() {
   saveButton.disabled = true;
 }
 
+function removeFromStorage(id) {
+  localStorage.removeItem(id);
+};
+
 $('.idea-section').on('click', function (e) {
   if ($(e.target).hasClass('up-vote-button')) {
     console.log('qualityUp clicked')
@@ -87,7 +92,9 @@ $('.idea-section').on('click', function (e) {
   } else if ($(e.target).hasClass('delete-idea-button')) {
     console.log('delete-idea-button Clicked')
     $(e.target).parent().fadeOut(1000, function (){
+      var id = $(e.target).parent().attr('id')
     $(e.target).parent().remove();
+    removeFromStorage(id)
   });
   }
 });
