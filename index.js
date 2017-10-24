@@ -32,7 +32,7 @@ function createCardObjects(title, body, quality, id) {
         <button class="down-vote-button"></button>
         <h3 class="quality">Quality: Swill</h3>
       </article>`);
-  cardObject.appendTo('.idea-section');
+  cardObject.prependTo('.idea-section');
 }
 
 function newIdea(title, body, quality, id) {
