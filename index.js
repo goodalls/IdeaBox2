@@ -34,22 +34,21 @@ function addIdea() {
 
   cardObject.appendTo('.idea-section');
 
-  console.log(ideaName.val());
-
-  var idea = new IdeaObject(ideaName.val(), ideaDetails.val(), quality, id)
-  // ideaObject(ideaName.value, ideaDetails.value, , id);
-  // var storedIdeas = new Object(ideaName.value, ideaDetails.value, id);
-  // console.log('stuff');
-  var stringifiedIdea = JSON.stringify(idea);
-  localStorage.setItem(id, stringifiedIdea);
-
-  // var retrievedIdea = localStorage.getItem('idea');
-  // var parsedIdea = JSON.parse(retrievedIdea);
+  storeIdea(ideaName.val(), ideaDetails.val(), quality, id);
   inputReset();
 }
 
-function createIdeaCard (){
+function storeIdea(name, detail, quality, id) {
+  var idea = new IdeaObject(name, detail, quality, id)
+  var stringifiedIdea = JSON.stringify(idea);
+  localStorage.setItem(id, stringifiedIdea);
+  ideaArchive(id);
+}
 
+function ideaArchive(id){
+  var retrievedIdea = localStorage.getItem(id);
+  var parsedIdea = JSON.parse(retrievedIdea);
+  // addIdea();
 }
 
 function inputReset() {
