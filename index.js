@@ -3,6 +3,8 @@ var ideaDetails = $('#body-input');
 var saveButton = $('#save-button');
 var quality = 0;
 
+window.onload = loadStoredIdeas(localStorage.getItem([id]));
+
 ideaName.on('keyup', saveButtonEnabled);
 ideaDetails.on('keyup', saveButtonEnabled);
 saveButton.on('click', newIdea);
@@ -21,7 +23,6 @@ function IdeaObject(title, body, quality, id) {
 }
 
 function createCardObjects(title, body, quality, id) {
-
   var cardObject = $(`<article id='${id}' class="idea-card">
         <h2>${title}</h2>
         <button class="delete-idea-button"></button>
@@ -30,7 +31,6 @@ function createCardObjects(title, body, quality, id) {
         <button class="down-vote-button"></button>
         <h3 class="quality">quality: swill</h3>
       </article>`);
-
   cardObject.appendTo('.idea-section');
 }
 
@@ -49,10 +49,19 @@ function storeIdea(name, detail, quality, id) {
   ideaArchive(id);
 }
 
-function ideaArchive(id){
+function ideaArchive(id) {
   var retrievedIdea = localStorage.getItem(id);
   var parsedIdea = JSON.parse(retrievedIdea);
   createCardObjects(parsedIdea.title, parsedIdea.body, parsedIdea.quality, id);
+}
+
+function loadStoredIdeas(id) {
+  for (var i = 0; i < localStorage.length; i++) {
+    
+    localStorage.getItem(id);
+
+    console.log(localStorage.getItem(id));
+  }
 }
 
 function inputReset() {
