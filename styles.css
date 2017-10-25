@@ -2,6 +2,7 @@ body {
   font-family: Open Sans;
   font-weight: 400;
   background: white;
+  text-align: center;
 }
 
 header {
@@ -9,14 +10,12 @@ header {
   display: flex;
   flex-direction: row;
   font-family: 'Roboto Slab', serif;
-  font-size: 7em;
   font-weight: 700;
   justify-content: center;
-  padding: 4% 0% 0% 0%;
 }
 
 .header-1 {
-  color: #00A79D
+  color: #00A79D;
 }
 
 .header-2 {
@@ -32,8 +31,8 @@ form {
 input {
   border: solid;
   border-color: #CCCDCF;
-  font-size: 5em;
   margin: 4% 8% 0% 8%;
+  width: 50%;
 } 
 
 input::placeholder {
@@ -41,20 +40,18 @@ input::placeholder {
 }
 
 #title-input {
-  padding: 1% 0% 1% 2%;
+  
 }
 
 #body-input {
-  padding: 1% 0% 17% 2%;
+  
 }
 
 #save-button {
   background: #00A79D;
   color: #FFFFFF;
-  font-size: 4em;
   letter-spacing: .1em;
   margin: 4% 8%;
-  padding: 2% 0%;
 }
 
 #save-button:hover {
@@ -62,9 +59,11 @@ input::placeholder {
 }
 
 #search-input {
-  padding: 1% 0% 1% 2%;
+
 }
 
+
+/*Card Styling*/
 .idea-card {
   margin: 10% 8%;
 }
@@ -72,16 +71,12 @@ input::placeholder {
 .idea-card h2{
   color: #6D6E71;
   display: inline;
-  font-size: 4.5em;
 }
 
 .delete-idea-button {
-  /*position: absolute;
-  right: 0px;
-  top: 0px;*/
   text-align: left;
-  height: 80px;
-  width: 80px;
+  height: 25px;
+  width: 25px;
   background-image: url("images/delete.svg");
   background-repeat: no-repeat;
 }
@@ -93,15 +88,13 @@ input::placeholder {
 
 .idea-card p {
   color: #939598;
-  font-size: 3.5em;
-  padding: 0% 0% 7% 0%;
+  
 }
 
 .up-vote-button {
-  height: 80px;
-  width: 80px;
+  height: 25px;
+  width: 25px;
   background-image: url("images/upvote.svg");
-  padding: 0% 3% 0% 0%;
   background-repeat: no-repeat;
 }
 
@@ -110,11 +103,12 @@ input::placeholder {
 }
 
 .down-vote-button {
-  height: 80px;
-  width: 80px;
+  height: 25px;
+  width: 25px;
   background-image: url("images/downvote.svg");
-  padding: 0% 3% 0% 0%;
   background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center; 
 }
 
 .down-vote-button:hover {
@@ -123,8 +117,7 @@ input::placeholder {
 
 .idea-card h3{
   display: inline-block;
-  font-size: 3.5em;
-  padding: 1% 0% 0% 4%;
+  font-size: 1em;
   position: absolute;
   text-align: center;
 }
@@ -132,6 +125,26 @@ input::placeholder {
 /*Desktop Version*/
 @media only screen and (min-width: 768px) {
 
+h1 {
+  font-size: 2.5em;
+}
 
+input {
+  font-size: 1em;
+} 
 
 }/*Desktop Version*/
+
+/*Mobile Version*/
+@media only screen and (max-width: 768px) {
+  
+
+h1 {
+  font-size: 7em;
+}
+
+input {
+  font-size: 5em;
+} 
+
+}/*End Mobile Version*/
