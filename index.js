@@ -1,9 +1,6 @@
 var ideaName = $('#title-input');
 var ideaDetails = $('#body-input');
 var saveButton = $('#save-button');
-var quality = ['Swill', 'Plausible', 'Genius'];
-counter = 0;
-
 
 window.onload = loadStoredIdeas();
 
@@ -80,19 +77,26 @@ function removeFromStorage(id) {
 $('.idea-section').on('click', function (e) {
   var id = $(e.target).parent().attr('id')
   if ($(e.target).hasClass('up-vote-button')) {
-    console.log('qualityUp clicked');
-    console.log(counter);
-    counter++;
-    qualityModifier(id);
-  } 
+    if($(e.target).siblings('h3').text() === 'Quality: Swill'){
+      $(e.target).siblings('h3').text('Quality: Plausible'); 
+      savingQualityModifier(id, 'Plausible');
+    }
+    else if($(e.target).siblings('h3').text() === 'Quality: Plausible'){
+      $(e.target).siblings('h3').text('Quality: Genius'); 
+      savingQualityModifier(id, 'Genius');
+    }
+  }
   else if ($(e.target).hasClass('down-vote-button')) {
-    console.log('quality Down Clicked');
-    console.log(counter);
-    counter--;
-    qualityModifier(id);
+    if($(e.target).siblings('h3').text() === 'Quality: Genius'){
+      $(e.target).siblings('h3').text('Quality: Plausible'); 
+      savingQualityModifier(id, 'Plausible');
+    }
+    else if($(e.target).siblings('h3').text() === 'Quality: Plausible'){
+      $(e.target).siblings('h3').text('Quality: Swill'); 
+      savingQualityModifier(id, 'Swill');
+    }
   } 
   else if ($(e.target).hasClass('delete-idea-button')) {
-    console.log('delete-idea-button Clicked');
     $(e.target).parent().fadeOut(1000, function (){
     $(e.target).parent().remove();
     removeFromStorage(id);
@@ -100,35 +104,10 @@ $('.idea-section').on('click', function (e) {
   }
 })
 
-function qualityModifier(id) {
+function savingQualityModifier(id, quality) {
   var pullStoredIdea = localStorage.getItem(id);
   var parsePulledIdea = JSON.parse(pullStoredIdea);
-  if (counter === 0) {
-    $('.quality').text(quality[0]);
-    parsePulledIdea.quality = quality[0];
-    var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
-    localStorage.setItem(id, stringifiedChangedQuality);
-  } 
-  else if (counter === 1) {
-    $('.quality').text(quality[1]);
-    parsePulledIdea.quality = quality[1];
-    var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
-    localStorage.setItem(id, stringifiedChangedQuality);
-  } 
-  else if (counter === 2) {
-    $('.quality').text(quality[2]);
-    parsePulledIdea.quality = quality[2];
-    var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
-    localStorage.setItem(id, stringifiedChangedQuality);
-  } 
-  else {
-    if (counter > 2) {
-      counter--;
-      qualityModifier (id);
-    } 
-    else if (counter < 0) {
-      counter++;
-      qualityModifier (id);
-    }
-  }
+  parsePulledIdea.quality = quality;
+  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
+  localStorage.setItem(id, stringifiedChangedQuality);
 }
