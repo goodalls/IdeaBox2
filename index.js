@@ -110,7 +110,7 @@ function saveIdeaBodyChanges(id, bodyText) {
   parsePulledIdea.body = bodyText;
   var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
   localStorage.setItem(id, stringifiedChangedQuality);  
-}g
+}
 
 $('.idea-section').on('click', function (e) {
   var id = $(e.target).closest('article').attr('id')
