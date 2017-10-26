@@ -74,53 +74,6 @@ function removeFromStorage(id) {
   localStorage.removeItem(id);
 }
 
-$('.idea-section').on('focusout', function(e) {
-  if ($(e.target).hasClass('title')) {
-  var id = $(e.target).parent().parent().attr('id');
-  var titleText = $(e.target);
-  titleText = titleText.text();
-  saveIdeaTitleChanges(id, titleText);
-  }
-  else if ($(e.target).hasClass('idea-body')) {
-  var id = $(e.target).parent().attr('id');
-  var bodyText = $(e.target);
-  bodyText = bodyText.text();
-  saveIdeaBodyChanges(id, bodyText);
-  }
-})
-
-$('#search-input').on('keyup', function(e) {
-  var searchText = $(e.target).val();
-  var allTitles = $('.title');
-  var allBodies = $('.idea-body');
-  var allIdeas = $('article');
-
-  for(var i = 0; i < allIdeas.length; i++) {
-    if($(allTitles[i]).text().includes(searchText) || $(allBodies[i]).text().includes(searchText)) {
-      $(allIdeas[i]).show();
-    }
-    else {
-      $(allIdeas[i]).hide();
-    }
-  }
-})
-
-function saveIdeaTitleChanges(id, titleText) {
-  var pullStoredIdea = localStorage.getItem(id);
-  var parsePulledIdea = JSON.parse(pullStoredIdea);
-  parsePulledIdea.title = titleText;
-  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
-  localStorage.setItem(id, stringifiedChangedQuality);  
-}
-
-function saveIdeaBodyChanges(id, bodyText) {
-  var pullStoredIdea = localStorage.getItem(id);
-  var parsePulledIdea = JSON.parse(pullStoredIdea);
-  parsePulledIdea.body = bodyText;
-  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
-  localStorage.setItem(id, stringifiedChangedQuality);  
-}
-
 $('.idea-section').on('click', function (e) {
   var id = $(e.target).closest('article').attr('id')
   if ($(e.target).hasClass('up-vote-button')) {
@@ -151,10 +104,56 @@ $('.idea-section').on('click', function (e) {
   }
 })
 
+$('.idea-section').on('focusout', function(e) {
+  if ($(e.target).hasClass('title')) {
+    var id = $(e.target).parent().parent().attr('id');
+    var titleText = $(e.target);
+    titleText = titleText.text();
+    saveIdeaTitleChanges(id, titleText);
+  }
+  else if ($(e.target).hasClass('idea-body')) {
+    var id = $(e.target).parent().attr('id');
+    var bodyText = $(e.target);
+    bodyText = bodyText.text();
+    saveIdeaBodyChanges(id, bodyText);
+  }
+})
+
+$('#search-input').on('keyup', function(e) {
+  var searchText = $(e.target).val();
+  var allTitles = $('.title');
+  var allBodies = $('.idea-body');
+  var allIdeas = $('article');
+  for(var i = 0; i < allIdeas.length; i++) {
+    if($(allTitles[i]).text().includes(searchText) || $(allBodies[i]).text().includes(searchText)) {
+      $(allIdeas[i]).show();
+    }
+    else {
+      $(allIdeas[i]).hide();
+    }
+  }
+})
+
 function savingQualityModifier(id, quality) {
   var pullStoredIdea = localStorage.getItem(id);
   var parsePulledIdea = JSON.parse(pullStoredIdea);
   parsePulledIdea.quality = quality;
   var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
   localStorage.setItem(id, stringifiedChangedQuality);
+}
+
+function saveIdeaTitleChanges(id, titleText) {
+  var pullStoredIdea = localStorage.getItem(id);
+  var parsePulledIdea = JSON.parse(pullStoredIdea);
+  parsePulledIdea.title = titleText;
+  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
+  localStorage.setItem(id, stringifiedChangedQuality);  
+}
+
+function saveIdeaBodyChanges(id, bodyText) {
+  var pullStoredIdea = localStorage.getItem(id);
+  var parsePulledIdea = JSON.parse(pullStoredIdea);
+  parsePulledIdea.body = bodyText;
+  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
+  localStorage.setItem(id, stringifiedChangedQuality);  
 }

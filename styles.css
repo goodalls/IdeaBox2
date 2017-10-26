@@ -75,8 +75,8 @@ input::placeholder {
   display: -o-flex;
   display: -webkit-flex;
   display: flex;
-  justify-content: space-between;
   margin-top: 1.5em;
+  justify-content: space-between;
 }
 
 .idea-card h2 {
