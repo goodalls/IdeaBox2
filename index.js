@@ -7,7 +7,6 @@ window.onload = loadStoredIdeas();
 ideaName.on('keyup', saveButtonEnabled);
 ideaDetails.on('keyup', saveButtonEnabled);
 saveButton.on('click', newIdea);
-//localstorage[key] = idea <- works if this is the object
 
 function saveButtonEnabled() {
   if (saveButton.disabled = true) {
@@ -79,20 +78,30 @@ $('.idea-section').on('focusout', function(e) {
   if ($(e.target).hasClass('title')) {
   var id = $(e.target).parent().parent().attr('id');
   var titleText = $(e.target);
-  console.log(titleText);
   titleText = titleText.text();
-  console.log(titleText);
-  console.log(id);
   saveIdeaTitleChanges(id, titleText);
   }
   else if ($(e.target).hasClass('idea-body')) {
   var id = $(e.target).parent().attr('id');
   var bodyText = $(e.target);
-  console.log(bodyText);
   bodyText = bodyText.text();
-  console.log(bodyText);
-  console.log(id);
   saveIdeaBodyChanges(id, bodyText);
+  }
+})
+
+$('#search-input').on('keyup', function(e) {
+  var searchText = $(e.target).val();
+  var allTitles = $('.title');
+  var allBodies = $('.idea-body');
+  var allIdeas = $('article');
+
+  for(var i = 0; i < allIdeas.length; i++) {
+    if($(allTitles[i]).text().includes(searchText) || $(allBodies[i]).text().includes(searchText)) {
+      $(allIdeas[i]).show();
+    }
+    else {
+      $(allIdeas[i]).hide();
+    }
   }
 })
 
