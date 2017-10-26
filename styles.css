@@ -23,7 +23,6 @@ header {
   color: #6D6E71;
 }
 
-
 .form {
   background: #E5F3F2;
   display: flex;
@@ -31,8 +30,7 @@ header {
 }
 
 input {
-  border-color: #CCCDCF;
-  border: solid;
+  border: solid #CCCDCF;
   margin: 1% 0%;
   width: 50%;
 } 
@@ -174,20 +172,17 @@ input::placeholder {
 /*Mobile Version*/
 @media only screen and (max-width: 768px) {
 
-
   h1 {
     font-size: 2em;
   }
 
   input {
     font-size: 1.5em;
-  } 
-
-  input {
     width: 80%;
   } 
 
   #body-input {
+    overflow-wrap: break-word;
     padding-bottom: 75px;
   }
 
