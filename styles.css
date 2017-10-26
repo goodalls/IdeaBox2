@@ -137,7 +137,6 @@ input::placeholder {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-
 }
 
 .down-vote-button:hover {
@@ -208,6 +207,7 @@ input {
 #save-button {
   margin-bottom: 1em;
 }
+
 #search-input {
   margin: 1em 0px;
 }
