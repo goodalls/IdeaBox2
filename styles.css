@@ -1,7 +1,7 @@
 body {
+  background: white;
   font-family: Open Sans, serif;
   font-weight: 400;
-  background: white;
   text-align: center;
 }
 
@@ -23,7 +23,6 @@ header {
   color: #6D6E71;
 }
 
-
 .form {
   background: #E5F3F2;
   display: flex;
@@ -31,21 +30,15 @@ header {
 }
 
 input {
-  border: solid;
-  border-color: #CCCDCF;
+  border: solid #CCCDCF;
   margin: 1% 0%;
   width: 50%;
 } 
 
 input::placeholder {
   color: #D3D4D5;
+  padding-left: .25em;
 }
-
-#title-input {
- 
-}
-
-
 
 #save-button {
   background: #00A79D;
@@ -58,57 +51,52 @@ input::placeholder {
   background: #045E55;
 }
 
-#search-input {
-
-}
-
-
 /*Card Styling*/
-
 .idea-section {
-  display: -webkit-flex;
+  align-items: center;
   display: -moz-flex;
   display: -ms-flex;
   display: -o-flex;
+  display: -webkit-flex;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .idea-card {
-  width: 50%;
   border-bottom: 1px solid #CCCDCF;
+  padding-bottom: 1em;
   text-align: left;
+  width: 50%;
 }
 
 .card-line-1 {
- display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
   display: -o-flex;
+  display: -webkit-flex;
   display: flex;
   justify-content: space-between;
+  margin-top: 1.5em;
 }
 
-.idea-card h2{
+.idea-card h2 {
   color: #6D6E71;
+  font-family: 'Roboto Slab', serif;
   font-size: 1.5em;
   font-weight: 700;
-  font-family: 'Roboto Slab', serif;
 }
 
 .delete-idea-button {
-  height: 3em;
-  width: 3em;
   background-image: url("images/delete.svg");
+  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: center;
+  height: 3em;
+  width: 3em;
 }
 
 .delete-idea-button:hover {
   background-image: url("images/delete-hover.svg");
-
 }
 
 .idea-card p {
@@ -117,13 +105,12 @@ input::placeholder {
 }
 
 .up-vote-button {
-  height: 3em;
-  width: 3em;
   background-image: url("images/upvote.svg");
+  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: center;
-
+  height: 3em;
+  width: 3em;
 }
 
 .up-vote-button:hover {
@@ -131,85 +118,84 @@ input::placeholder {
 }
 
 .down-vote-button {
-  height: 3em;
-  width: 3em;
   background-image: url("images/downvote.svg");
+  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: center;
-
+  height: 3em;
+  margin-left: 1em;
+  width: 3em;
 }
 
 .down-vote-button:hover {
   background-image: url("images/downvote-hover.svg");
 }
 
-.idea-card h3{
+.idea-card h3 {
   color: #6D6E71;
+  display: inline-block;
+  font-family: 'Roboto Slab', serif;
   font-size: 1em;
   font-weight: 700;
-  font-family: 'Roboto Slab', serif;
-  display: inline-block;
-  margin: 0 0 1em 1em;
+  margin: 0em 0 1em 1em;
   vertical-align: middle;
 }
 
 .idea-card button {
-  border: none;
   background-color: transparent; 
+  border: none;
 }
 
 /*Desktop Version*/
 @media only screen and (min-width: 768px) {
 
-h1 {
-  font-size: 2.5em;
-}
+  h1 {
+    font-size: 3em;
+    margin-bottom: .5em;
+  }
 
-input {
-  font-size: 2em;
-} 
+  input {
+    font-size: 2em;
+  } 
 
-#save-button {
-  line-height: 1.5em;
-  margin-bottom: 1em;
-}
+  #save-button {
+    line-height: 1.5em;
+    margin-bottom: 1em;
+  }
 
-#search-input {
-  margin: 1em 0em;
-}
+  #search-input {
+    margin: 1em 0em;
+  }
 
-}/*Desktop Version*/
+}/* End Desktop Version*/
 
 /*Mobile Version*/
 @media only screen and (max-width: 768px) {
-  
 
-h1 {
-  font-size: 2em;
-}
+  h1 {
+    font-size: 2em;
+  }
 
-input {
-  font-size: 1.5em;
-} 
+  input {
+    font-size: 1.5em;
+    width: 80%;
+  } 
 
-input {
-  width: 80%;
-} 
+  #body-input {
+    overflow-wrap: break-word;
+    padding-bottom: 75px;
+  }
 
-#body-input {
-  padding-bottom: 75px;
-}
+  .idea-card {
+    width: 80%;
+  }
 
-.idea-card {
-  width: 80%;
-}
+  #save-button {
+    margin-bottom: 1em;
+  }
 
-#save-button {
-  margin-bottom: 1em;
-}
-#search-input {
-  margin: 1em 0px;
-}
+  #search-input {
+    margin: 1em 0px;
+  }
 
 }/*End Mobile Version*/
