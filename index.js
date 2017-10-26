@@ -23,13 +23,15 @@ function IdeaObject(title, body, quality, id) {
 
 function createCardObjects(title, body, quality, id) {
   var cardObject = $(`<article id='${id}' class="idea-card">
-        <h2>${title}</h2>
-        <button class="delete-idea-button"></button>
+        <div class="card-line-1"><h2>${title}</h2><button class="delete-idea-button"></button></div>
+
         <p class="idea-body">${body}</p>
         <button class="up-vote-button"></button>
         <button class="down-vote-button"></button>
         <h3>Quality: <span class="quality">${quality}</span></h3>
-      </article>`);
+      </article>
+
+      `);
   cardObject.prependTo('.idea-section');
 }
 
@@ -75,7 +77,7 @@ function removeFromStorage(id) {
 }
 
 $('.idea-section').on('click', function (e) {
-  var id = $(e.target).parent().attr('id')
+  var id = $(e.target).closest('article').attr('id')
   if ($(e.target).hasClass('up-vote-button')) {
     if($(e.target).siblings('h3').text() === 'Quality: Swill'){
       $(e.target).siblings('h3').text('Quality: Plausible'); 
@@ -97,8 +99,8 @@ $('.idea-section').on('click', function (e) {
     }
   } 
   else if ($(e.target).hasClass('delete-idea-button')) {
-    $(e.target).parent().fadeOut(1000, function (){
-    $(e.target).parent().remove();
+    $(e.target).closest('article').fadeOut(1000, function (){
+    $(e.target).closest('article').remove();
     removeFromStorage(id);
     })
   }

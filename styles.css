@@ -79,21 +79,17 @@ input::placeholder {
 
 .idea-card {
   width: 50%;
-  height: 200px;
   border-bottom: 1px solid #CCCDCF;
-  display: -webkit-flex;
+  text-align: left;
+}
+
+.card-line-1 {
+ display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
   display: -o-flex;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  align-items: stretch;
-  align-content: space-between;
-}
-
-.card-line-1 {
-
 }
 
 .idea-card h2{
@@ -119,7 +115,7 @@ input::placeholder {
 
 .idea-card p {
   color: #939598;
-  
+  margin: 1em 0em;
 }
 
 .up-vote-button {
@@ -149,9 +145,17 @@ input::placeholder {
 }
 
 .idea-card h3{
-  display: inline-block;
+  color: #6D6E71;
   font-size: 1em;
- 
+  font-weight: 700;
+  font-family: 'Roboto Slab', serif;
+  display: inline-block;
+  margin-bottom: 1em;
+}
+
+.idea-card button {
+  border: none;
+  background-color: transparent; 
 }
 
 /*Desktop Version*/
