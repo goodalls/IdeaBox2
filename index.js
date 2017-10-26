@@ -7,6 +7,7 @@ window.onload = loadStoredIdeas();
 ideaName.on('keyup', saveButtonEnabled);
 ideaDetails.on('keyup', saveButtonEnabled);
 saveButton.on('click', newIdea);
+//localstorage[key] = idea <- works if this is the object
 
 function saveButtonEnabled() {
   if (saveButton.disabled = true) {
@@ -23,15 +24,13 @@ function IdeaObject(title, body, quality, id) {
 
 function createCardObjects(title, body, quality, id) {
   var cardObject = $(`<article id='${id}' class="idea-card">
-        <div class="card-line-1"><h2>${title}</h2><button class="delete-idea-button"></button></div>
-
-        <p class="idea-body">${body}</p>
+        <div class="card-line-1"><h2 class="title" contenteditable="true">${title}</h2>
+        <button class="delete-idea-button"></button></div>
+        <p class="idea-body" contenteditable="true">${body}</p>
         <button class="up-vote-button"></button>
         <button class="down-vote-button"></button>
         <h3>Quality: <span class="quality">${quality}</span></h3>
-      </article>
-
-      `);
+      </article>`);
   cardObject.prependTo('.idea-section');
 }
 
@@ -75,6 +74,43 @@ function inputReset() {
 function removeFromStorage(id) {
   localStorage.removeItem(id);
 }
+
+$('.idea-section').on('focusout', function(e) {
+  if ($(e.target).hasClass('title')) {
+  var id = $(e.target).parent().parent().attr('id');
+  var titleText = $(e.target);
+  console.log(titleText);
+  titleText = titleText.text();
+  console.log(titleText);
+  console.log(id);
+  saveIdeaTitleChanges(id, titleText);
+  }
+  else if ($(e.target).hasClass('idea-body')) {
+  var id = $(e.target).parent().attr('id');
+  var bodyText = $(e.target);
+  console.log(bodyText);
+  bodyText = bodyText.text();
+  console.log(bodyText);
+  console.log(id);
+  saveIdeaBodyChanges(id, bodyText);
+  }
+})
+
+function saveIdeaTitleChanges(id, titleText) {
+  var pullStoredIdea = localStorage.getItem(id);
+  var parsePulledIdea = JSON.parse(pullStoredIdea);
+  parsePulledIdea.title = titleText;
+  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
+  localStorage.setItem(id, stringifiedChangedQuality);  
+}
+
+function saveIdeaBodyChanges(id, bodyText) {
+  var pullStoredIdea = localStorage.getItem(id);
+  var parsePulledIdea = JSON.parse(pullStoredIdea);
+  parsePulledIdea.body = bodyText;
+  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
+  localStorage.setItem(id, stringifiedChangedQuality);  
+}g
 
 $('.idea-section').on('click', function (e) {
   var id = $(e.target).closest('article').attr('id')
