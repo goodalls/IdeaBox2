@@ -70,12 +70,6 @@ function inputReset() {
   saveButton.disabled = true;
 }
 
-function searchInputReset() {
-  var searchInput = $('#search-input')
-  $(searchInput).val('');
-  $(searchInput).focus();
-}
-
 function removeFromStorage(id) {
   localStorage.removeItem(id);
 }
@@ -102,7 +96,6 @@ $('#search-input').on('keyup', function(e) {
   var allIdeas = $('article');
 
   for(var i = 0; i < allIdeas.length; i++) {
-
     if($(allTitles[i]).text().includes(searchText) || $(allBodies[i]).text().includes(searchText)) {
       $(allIdeas[i]).show();
     }
