@@ -51,6 +51,10 @@ input::placeholder {
   background: #045E55;
 }
 
+#save-button:disabled {
+    opacity: .5;
+}
+
 /*Card Styling*/
 .idea-section {
   align-items: center;

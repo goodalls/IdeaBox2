@@ -2,17 +2,17 @@
 // var $('#body-input') = $('#body-input');
 // var $('#save-button') = $('#save-button');
 
+// Event Listeners
 window.onload = loadStoredIdeas();
-
 $('#title-input').on('keyup', saveButtonEnabled);
 $('#body-input').on('keyup', saveButtonEnabled);
 $('#save-button').on('click', newIdea);
 
 function saveButtonEnabled() {
-  if ($('#title-input') === ''){
-    $('#save-button').prop(disabled, true) 
+  if ($('#title-input').val() === '' || $('#body-input').val() === ''){
+    $('#save-button').prop('disabled', true) 
   }else{
-    $('#save-button').prop(disabled, false) 
+    $('#save-button').prop('disabled', false) 
   }
 }
 
@@ -39,6 +39,7 @@ function newIdea(title, body, quality, id) {
   event.preventDefault();
   var id = $.now();
   var newIdea = new IdeaObject($('#title-input').val(), $('#body-input').val(), quality, id);
+  createCardObjects($('#title-input').val(), $('#body-input').val(), newIdea.quality, newIdea.id);
   storeIdea($('#title-input').val(), $('#body-input').val(), quality, id);
   inputReset();
 }
@@ -47,13 +48,6 @@ function storeIdea(name, detail, quality, id) {
   var idea = new IdeaObject(name, detail, quality, id);
   var stringifiedIdea = JSON.stringify(idea);
   localStorage.setItem(id, stringifiedIdea);
-  ideaArchive(id);
-}
-
-function ideaArchive(id) {
-  var retrievedIdea = localStorage.getItem(id);
-  var parsedIdea = JSON.parse(retrievedIdea);
-  createCardObjects(parsedIdea.title, parsedIdea.body, parsedIdea.quality, id);
 }
 
 function loadStoredIdeas() {
@@ -61,7 +55,7 @@ function loadStoredIdeas() {
   for (var i = 0; i < ideaArray.length; i++) {
     var storedIdea = localStorage.getItem(ideaArray[i]);
     var reParseIdea = JSON.parse(storedIdea);
-    createCardObjects(reParseIdea['title'], reParseIdea['body'], reParseIdea['quality'], reParseIdea['id']);
+    createCardObjects(reParseIdea.title, reParseIdea.body, reParseIdea.quality, reParseIdea.id);
   }
 }
 
@@ -69,7 +63,7 @@ function inputReset() {
   $($('#title-input')).val('');
   $($('#body-input')).val('');
   $($('#title-input')).focus();
-  $('#save-button').prop(disabled, true);
+  $('#save-button').prop('disabled', true);
 }
 
 function removeFromStorage(id) {
