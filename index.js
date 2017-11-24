@@ -1,16 +1,18 @@
-var ideaName = $('#title-input');
-var ideaDetails = $('#body-input');
-var saveButton = $('#save-button');
+// var $('#title-input') = $('#title-input');
+// var $('#body-input') = $('#body-input');
+// var $('#save-button') = $('#save-button');
 
 window.onload = loadStoredIdeas();
 
-ideaName.on('keyup', saveButtonEnabled);
-ideaDetails.on('keyup', saveButtonEnabled);
-saveButton.on('click', newIdea);
+$('#title-input').on('keyup', saveButtonEnabled);
+$('#body-input').on('keyup', saveButtonEnabled);
+$('#save-button').on('click', newIdea);
 
 function saveButtonEnabled() {
-  if (saveButton.disabled = true) {
-  saveButton.removeAttr('disabled', false);
+  if ($('#title-input') === ''){
+    $('#save-button').prop(disabled, true) 
+  }else{
+    $('#save-button').prop(disabled, false) 
   }
 }
 
@@ -36,8 +38,8 @@ function createCardObjects(title, body, quality, id) {
 function newIdea(title, body, quality, id) {
   event.preventDefault();
   var id = $.now();
-  var newIdea = new IdeaObject(ideaName.val(), ideaDetails.val(), quality, id);
-  storeIdea(ideaName.val(), ideaDetails.val(), quality, id);
+  var newIdea = new IdeaObject($('#title-input').val(), $('#body-input').val(), quality, id);
+  storeIdea($('#title-input').val(), $('#body-input').val(), quality, id);
   inputReset();
 }
 
@@ -64,10 +66,10 @@ function loadStoredIdeas() {
 }
 
 function inputReset() {
-  $(ideaName).val('');
-  $(ideaDetails).val('');
-  $(ideaName).focus();
-  saveButton.disabled = true;
+  $($('#title-input')).val('');
+  $($('#body-input')).val('');
+  $($('#title-input')).focus();
+  $('#save-button').prop(disabled, true);
 }
 
 function removeFromStorage(id) {
