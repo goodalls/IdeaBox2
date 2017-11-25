@@ -4,6 +4,9 @@ window.onload = loadStoredIdeas();
 $('#title-input').on('keyup', saveButtonEnabled);
 $('#body-input').on('keyup', saveButtonEnabled);
 $('#save-button').on('click', newIdea);
+$('.idea-section').on('click', cardHandler)
+$('.idea-section').on('keyup', editCard)
+$('#search-input').on('keyup', search)
 
 function saveButtonEnabled() {
   if ($('#title-input').val() === '' || $('#body-input').val() === ''){
@@ -56,37 +59,47 @@ function inputReset() {
   $('#save-button').prop('disabled', true);
 }
 
-$('.idea-section').on('click', function (e) {
+
+function cardHandler(e) {
+ var id = $(e.target).closest('article').attr('id')
+ var obj = getObject(id)
+ if ($(e.target).hasClass('up-vote-button')){
+ upVoteButton(e, obj);
+}else if ($(e.target).hasClass('down-vote-button')){
+ downVoteButton(e, obj);
+}else if ($(e.target).hasClass('delete-idea-button')){
+ deleteIdeaButton(e, obj);
+}
+}
+
+function upVoteButton(e, obj) {
   var qualityArray = ['Swill', 'Plausible', 'Genius']
-  var id = $(e.target).closest('article').attr('id')
-  var obj = getObject(id)
   var index = qualityArray.indexOf(obj.quality);
-  
-  if ($(e.target).hasClass('up-vote-button')) {
-    if(index <= 1){
-      index++
-      obj.quality = qualityArray[index]
-      $(e.target).siblings('h3').text('Quality ' + qualityArray[index]); 
-      saveObject(obj);
-    }
+  if(index <= 1){
+    index++
+    obj.quality = qualityArray[index]
+    $(e.target).siblings('h3').text('Quality ' + qualityArray[index]); 
+    saveObject(obj);
   }
- 
-  else if ($(e.target).hasClass('down-vote-button')) {
-    if(index >= 1){
-      index--
-      obj.quality = qualityArray[index]
-      $(e.target).siblings('h3').text('Quality ' + qualityArray[index]); 
-      saveObject(obj);
-    }
+}
+
+function downVoteButton(e, obj) {
+  var qualityArray = ['Swill', 'Plausible', 'Genius']
+  var index = qualityArray.indexOf(obj.quality);
+  if(index >= 1){
+    index--
+    obj.quality = qualityArray[index]
+    $(e.target).siblings('h3').text('Quality ' + qualityArray[index]); 
+    saveObject(obj);
   }
-     
-  else if ($(e.target).hasClass('delete-idea-button')) {
-    $(e.target).closest('article').fadeOut(1000, function (){
+}
+
+function deleteIdeaButton(e, obj) {
+  $(e.target).closest('article').fadeOut(1000, function (){
     $(e.target).closest('article').remove();
-    localStorage.removeItem(id);
+    localStorage.removeItem(obj.id);
     })
-  }
-})
+}
 
 function getObject(id) {
   var pullStoredIdea = localStorage.getItem(id);
@@ -99,35 +112,49 @@ function saveObject(obj){
   localStorage.setItem(obj.id, stringifiedChangedObject);
 }
 
-$('.idea-section').on('keyup', function(e) {
+function editCard (e) {
+  var id = $(e.target).closest('article').attr('id')
+  var obj = getObject(id)
   if ($(e.target).hasClass('title')) {
-    var id = $(e.target).parent().parent().attr('id');
     var titleText = $(e.target).text();
-    var obj = getObject(id)
     obj.title = titleText
     saveObject(obj);
   }
   else if ($(e.target).hasClass('idea-body')) {
-    var id = $(e.target).parent().attr('id');
     var bodyText = $(e.target).text();
-    var obj = getObject(id)
     obj.body = bodyText
     saveObject(obj);
   }
-})
+}
 
-$('#search-input').on('keyup', function(e) {
-  var searchText = $(e.target).val();
+// function search (e) {
+//   var searchText = $('#search-input').val().toUpperCase();
+//   var searchArray = Object.values(localStorage)
+//   searchArray.forEach(function (v, i){
+//     if (v.includes(searchText)) {
+//       $().closest('article').show()
+//     } else {
+//       $(e.target).closest('article').hide()
+//     }
+//   });
+// }
+
+
+
+function search (e){
   var allTitles = $('.title');
   var allBodies = $('.idea-body');
   var allIdeas = $('article');
+  // var allQualities = $('.quality')
+  var searchText = $('#search-input').val().toUpperCase();
   for(var i = 0; i < allIdeas.length; i++) {
-    if($(allTitles[i]).text().includes(searchText) || $(allBodies[i]).text().includes(searchText)) {
+    if($(allTitles[i]).text().toUpperCase().includes(searchText) || $(allBodies[i]).text().toUpperCase().includes(searchText)) {
       $(allIdeas[i]).show();
-    }
-    else {
+    // }else if ($(allQualities[i]).text().toUpperCase().includes(searchText)){
+    //   $(allIdeas[i]).show();
+    }else{
       $(allIdeas[i]).hide();
     }
   }
-})
+}
 
