@@ -71,11 +71,15 @@ function removeFromStorage(id) {
 }
 
 $('.idea-section').on('click', function (e) {
+  var qualityArray = ['Swill', 'Plausible', 'Genius']
   var id = $(e.target).closest('article').attr('id')
+  var obj = getObject(id)
+  var index = 0
   if ($(e.target).hasClass('up-vote-button')) {
-    if($(e.target).siblings('h3').text() === 'Quality: Swill'){
-      $(e.target).siblings('h3').text('Quality: Plausible'); 
-      saveObjectUpdateQuality(id, 'Plausible');
+    index++
+    if($(e.target).siblings('.quality').text() === 'Swill'){
+      $(e.target).siblings('.quality').text('Plausible'); 
+      saveObject(obj.id, qualityArray[1]);
     }
     else if($(e.target).siblings('h3').text() === 'Quality: Plausible'){
       $(e.target).siblings('h3').text('Quality: Genius'); 
@@ -83,6 +87,7 @@ $('.idea-section').on('click', function (e) {
     }
   }
   else if ($(e.target).hasClass('down-vote-button')) {
+    index--
     if($(e.target).siblings('h3').text() === 'Quality: Genius'){
       $(e.target).siblings('h3').text('Quality: Plausible'); 
       saveObjectUpdateQuality(id, 'Plausible');
@@ -100,20 +105,34 @@ $('.idea-section').on('click', function (e) {
   }
 })
 
+function getObject(id) {
+  var pullStoredIdea = localStorage.getItem(id);
+  var obj = JSON.parse(pullStoredIdea);
+  return obj
+}
+
+function saveObject(obj){
+  var stringifiedChangedObject = JSON.stringify(obj);
+  localStorage.setItem(obj.id, stringifiedChangedObject);
+}
+
 $('.idea-section').on('focusout', function(e) {
   if ($(e.target).hasClass('title')) {
     var id = $(e.target).parent().parent().attr('id');
-    var titleText = $(e.target);
-    titleText = titleText.text();
-    saveObjectUpdateTitle(id, titleText);
+    var titleText = $(e.target).text();
+    var obj = getObject(id)
+    obj.title = titleText
+    saveObject(obj);
   }
   else if ($(e.target).hasClass('idea-body')) {
     var id = $(e.target).parent().attr('id');
-    var bodyText = $(e.target);
-    bodyText = bodyText.text();
-    saveObjectUpdateBody(id, bodyText);
+    var bodyText = $(e.target).text();
+    var obj = getObject(id)
+    obj.body = bodyText
+    saveObject(obj);
   }
 })
+
 
 $('#search-input').on('keyup', function(e) {
   var searchText = $(e.target).val();
@@ -130,40 +149,3 @@ $('#search-input').on('keyup', function(e) {
   }
 })
 
-// function saveObjectUpdate(id, quality, title, body){
-//   var pullStoredIdea = localStorage.getItem(id);
-//   var parsePulledIdea = JSON.parse(pullStoredIdea);
-//   if (quality !== undefined){
-//   parsePulledIdea.quality = quality
-// }else if (title !== undefined){
-//   parsePulledIdea.title = title
-// } else if (body !== undefined){
-//   parsePulledIdea.body = body
-// }
-//   var stringifiedChangedObject = JSON.stringify(parsePulledIdea);
-//   localStorage.setItem(id, stringifiedChangedObject);
-// }
-
-function saveObjectUpdateQuality(id, quality) {
-  var pullStoredIdea = localStorage.getItem(id);
-  var parsePulledIdea = JSON.parse(pullStoredIdea);
-  parsePulledIdea.quality = quality;
-  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
-  localStorage.setItem(id, stringifiedChangedQuality);
-}
-
-function saveObjectUpdateTitle(id, titleText) {
-  var pullStoredIdea = localStorage.getItem(id);
-  var parsePulledIdea = JSON.parse(pullStoredIdea);
-  parsePulledIdea.title = titleText;
-  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
-  localStorage.setItem(id, stringifiedChangedQuality);  
-}
-
-function saveObjectUpdateBody(id, bodyText) {
-  var pullStoredIdea = localStorage.getItem(id);
-  var parsePulledIdea = JSON.parse(pullStoredIdea);
-  parsePulledIdea.body = bodyText;
-  var stringifiedChangedQuality = JSON.stringify(parsePulledIdea);
-  localStorage.setItem(id, stringifiedChangedQuality);  
-}
