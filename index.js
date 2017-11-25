@@ -1,6 +1,3 @@
-// var $('#title-input') = $('#title-input');
-// var $('#body-input') = $('#body-input');
-// var $('#save-button') = $('#save-button');
 
 // Event Listeners
 window.onload = loadStoredIdeas();
@@ -23,14 +20,14 @@ function IdeaObject(title, body, quality, id) {
   this.id = id;
 }
 
-function createCardObjects(title, body, quality, id) {
-  var cardObject = $(`<article id='${id}' class="idea-card">
-        <div class="card-line-1"><h2 class="title" contenteditable="true">${title}</h2>
+function createCardObjects(obj) {
+  var cardObject = $(`<article id='${obj.id}' class="idea-card">
+        <div class="card-line-1"><h2 class="title" contenteditable="true">${obj.title}</h2>
         <button class="delete-idea-button"></button></div>
-        <p class="idea-body" contenteditable="true">${body}</p>
+        <p class="idea-body" contenteditable="true">${obj.body}</p>
         <button class="up-vote-button"></button>
         <button class="down-vote-button"></button>
-        <h3>Quality: <span class="quality">${quality}</span></h3>
+        <h3>Quality: <span class="quality">${obj.quality}</span></h3>
       </article>`);
   cardObject.prependTo('.idea-section');
 }
@@ -39,23 +36,16 @@ function newIdea(title, body, quality, id) {
   event.preventDefault();
   var id = $.now();
   var newIdea = new IdeaObject($('#title-input').val(), $('#body-input').val(), quality, id);
-  createCardObjects($('#title-input').val(), $('#body-input').val(), newIdea.quality, newIdea.id);
-  storeIdea($('#title-input').val(), $('#body-input').val(), quality, id);
+  createCardObjects(newIdea);
+  saveObject(newIdea)
   inputReset();
-}
-
-function storeIdea(name, detail, quality, id) {
-  var idea = new IdeaObject(name, detail, quality, id);
-  var stringifiedIdea = JSON.stringify(idea);
-  localStorage.setItem(id, stringifiedIdea);
 }
 
 function loadStoredIdeas() {
   var ideaArray = Object.keys(localStorage)
-  ideaArray.forEach(function (v) {
-    var storedIdea = localStorage.getItem(v);
-    var reParseIdea = JSON.parse(storedIdea);
-    createCardObjects(reParseIdea.title, reParseIdea.body, reParseIdea.quality, reParseIdea.id);
+  ideaArray.forEach(function (id) {
+    var obj = getObject(id)
+    createCardObjects(obj);
   })
 }
 
@@ -66,41 +56,35 @@ function inputReset() {
   $('#save-button').prop('disabled', true);
 }
 
-function removeFromStorage(id) {
-  localStorage.removeItem(id);
-}
 
 $('.idea-section').on('click', function (e) {
   var qualityArray = ['Swill', 'Plausible', 'Genius']
   var id = $(e.target).closest('article').attr('id')
   var obj = getObject(id)
-  var index = 0
+  var index = qualityArray.indexOf(obj.quality);
+  
   if ($(e.target).hasClass('up-vote-button')) {
-    index++
-    if($(e.target).siblings('.quality').text() === 'Swill'){
-      $(e.target).siblings('.quality').text('Plausible'); 
-      saveObject(obj.id, qualityArray[1]);
-    }
-    else if($(e.target).siblings('h3').text() === 'Quality: Plausible'){
-      $(e.target).siblings('h3').text('Quality: Genius'); 
-      saveObjectUpdateQuality(id, 'Genius');
+    if(index <= 1){
+      index++
+      obj.quality = qualityArray[index]
+      $(e.target).siblings('h3').text('Quality ' + qualityArray[index]); 
+      saveObject(obj);
     }
   }
+ 
   else if ($(e.target).hasClass('down-vote-button')) {
-    index--
-    if($(e.target).siblings('h3').text() === 'Quality: Genius'){
-      $(e.target).siblings('h3').text('Quality: Plausible'); 
-      saveObjectUpdateQuality(id, 'Plausible');
+    if(index >= 1){
+      index--
+      obj.quality = qualityArray[index]
+      $(e.target).siblings('h3').text('Quality ' + qualityArray[index]); 
+      saveObject(obj);
     }
-    else if($(e.target).siblings('h3').text() === 'Quality: Plausible'){
-      $(e.target).siblings('h3').text('Quality: Swill'); 
-      saveObjectUpdateQuality(id, 'Swill');
-    }
-  } 
+  }
+     
   else if ($(e.target).hasClass('delete-idea-button')) {
     $(e.target).closest('article').fadeOut(1000, function (){
     $(e.target).closest('article').remove();
-    removeFromStorage(id);
+    localStorage.removeItem(id);
     })
   }
 })
