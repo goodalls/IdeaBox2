@@ -13,7 +13,7 @@ function saveButtonEnabled() {
   }
 }
 
-function IdeaObject(title, body, quality, id) {
+function IdeaObject(title, body, id) {
   this.title = title;
   this.body = body;
   this.quality = 'Swill';
@@ -32,10 +32,10 @@ function createCardObjects(obj) {
   cardObject.prependTo('.idea-section');
 }
 
-function newIdea(title, body, quality, id) {
+function newIdea() {
   event.preventDefault();
   var id = $.now();
-  var newIdea = new IdeaObject($('#title-input').val(), $('#body-input').val(), quality, id);
+  var newIdea = new IdeaObject($('#title-input').val(), $('#body-input').val(), id);
   createCardObjects(newIdea);
   saveObject(newIdea)
   inputReset();
@@ -55,7 +55,6 @@ function inputReset() {
   $($('#title-input')).focus();
   $('#save-button').prop('disabled', true);
 }
-
 
 $('.idea-section').on('click', function (e) {
   var qualityArray = ['Swill', 'Plausible', 'Genius']
@@ -100,7 +99,7 @@ function saveObject(obj){
   localStorage.setItem(obj.id, stringifiedChangedObject);
 }
 
-$('.idea-section').on('focusout', function(e) {
+$('.idea-section').on('keyup', function(e) {
   if ($(e.target).hasClass('title')) {
     var id = $(e.target).parent().parent().attr('id');
     var titleText = $(e.target).text();
@@ -116,7 +115,6 @@ $('.idea-section').on('focusout', function(e) {
     saveObject(obj);
   }
 })
-
 
 $('#search-input').on('keyup', function(e) {
   var searchText = $(e.target).val();
